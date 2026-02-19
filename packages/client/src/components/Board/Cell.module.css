@@ -1,0 +1,70 @@
+.cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background: var(--color-ocean);
+  border: 1px solid var(--color-ocean-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast);
+  position: relative;
+  user-select: none;
+}
+
+.clickable {
+  cursor: crosshair;
+}
+
+.clickable:hover {
+  background: var(--color-ocean-light);
+}
+
+/* Cell states */
+.empty {
+  background: var(--color-ocean);
+}
+
+.ship {
+  background: var(--color-ship);
+}
+
+.hit {
+  background: var(--color-hit);
+}
+
+.miss {
+  background: var(--color-ocean-dark);
+}
+
+.sunk {
+  background: var(--color-sunk);
+}
+
+/* Preview states */
+.preview_valid {
+  background: rgba(46, 204, 113, 0.4) !important;
+  border-color: var(--color-valid);
+}
+
+.preview_invalid {
+  background: rgba(231, 76, 60, 0.4) !important;
+  border-color: var(--color-invalid);
+}
+
+/* Markers */
+.marker {
+  font-size: calc(var(--cell-size) * 0.5);
+  font-weight: bold;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.hit .marker,
+.sunk .marker {
+  color: white;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.miss .marker {
+  color: var(--color-text-muted);
+}

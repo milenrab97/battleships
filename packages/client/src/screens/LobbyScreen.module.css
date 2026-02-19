@@ -1,0 +1,115 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xl);
+  width: 100%;
+  max-width: 500px;
+}
+
+.heading {
+  font-size: var(--font-size-2xl);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.codeSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.codeLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: var(--font-size-3xl);
+  letter-spacing: 0.3em;
+  color: var(--color-accent);
+  background: var(--color-bg-card);
+  border: 2px dashed var(--color-accent-dim);
+  border-radius: var(--border-radius-md);
+  padding: var(--space-sm) var(--space-xl);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.code:hover {
+  background: var(--color-bg-hover);
+  border-color: var(--color-accent);
+}
+
+.copyHint {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.players {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+  width: 100%;
+}
+
+.playerCard {
+  flex: 1;
+  background: var(--color-bg-card);
+  border: 2px solid var(--color-ocean);
+  border-radius: var(--border-radius-md);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  transition: border-color var(--transition-normal);
+  min-height: 100px;
+  justify-content: center;
+}
+
+.playerCard.ready {
+  border-color: var(--color-success);
+}
+
+.playerName {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.readyBadge {
+  font-size: var(--font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-secondary);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--border-radius-sm);
+  background: var(--color-bg-primary);
+}
+
+.ready .readyBadge {
+  color: var(--color-success);
+  background: rgba(46, 204, 113, 0.1);
+}
+
+.vs {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.waiting {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}

@@ -1,0 +1,73 @@
+:root {
+  /* Colors */
+  --color-bg-primary: #0a1628;
+  --color-bg-secondary: #111d35;
+  --color-bg-card: #162040;
+  --color-bg-hover: #1d2d54;
+
+  --color-ocean: #1a3a5c;
+  --color-ocean-light: #254d73;
+  --color-ocean-dark: #0f2a45;
+
+  --color-text-primary: #e0e8f0;
+  --color-text-secondary: #8899aa;
+  --color-text-muted: #556677;
+
+  --color-accent: #4da6ff;
+  --color-accent-hover: #6bb5ff;
+  --color-accent-dim: #2a7acc;
+
+  --color-hit: #ff4444;
+  --color-hit-glow: rgba(255, 68, 68, 0.4);
+  --color-miss: #667788;
+  --color-ship: #3a7ca5;
+  --color-ship-placed: #2d8f6f;
+  --color-sunk: #cc3333;
+
+  --color-valid: #2ecc71;
+  --color-invalid: #e74c3c;
+
+  --color-success: #2ecc71;
+  --color-warning: #f1c40f;
+  --color-danger: #e74c3c;
+
+  /* Typography */
+  --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Fira Code', 'Consolas', monospace;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.5rem;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+
+  /* Grid */
+  --cell-size: 40px;
+  --grid-gap: 1px;
+  --grid-border: 2px;
+
+  /* Borders */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
