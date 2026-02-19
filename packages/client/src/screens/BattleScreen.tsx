@@ -55,7 +55,7 @@ export function BattleScreen() {
   function handleFire(row: number, col: number) {
     if (!isMyTurn) return;
     const cell = state.opponentBoard[row]?.[col];
-    if (cell && cell.state !== 'empty') return; // already shot
+    if (cell && cell.state !== 'empty') return;
 
     socket.emit('fireShot', { coordinate: { row, col } }, (res) => {
       if (res.success) {
@@ -69,10 +69,6 @@ export function BattleScreen() {
         if (res.result.sunkShip) {
           setNotification(`You sunk their ${res.result.sunkShip}!`);
           setTimeout(() => setNotification(null), 3000);
-        }
-
-        if (res.gameOver) {
-          // gameOver event will handle this
         }
       }
     });
@@ -89,7 +85,7 @@ export function BattleScreen() {
     <div className={styles.container}>
       <div className={styles.turnBanner}>
         <span className={`${styles.turnText} ${isMyTurn ? styles.yourTurn : styles.enemyTurn}`}>
-          {isMyTurn ? 'YOUR TURN — Fire a shot!' : `${opponent?.name ?? 'Opponent'}'s Turn...`}
+          {isMyTurn ? 'YOUR TURN' : `${opponent?.name ?? 'Opponent'}'s Turn`}
         </span>
       </div>
 
@@ -105,23 +101,20 @@ export function BattleScreen() {
       )}
 
       <div className={styles.battleArea}>
-        <div className={styles.boardSection}>
-          <ShipStatusPanel label="Your Fleet" shipsStatus={state.myShipsStatus} />
-          <Grid cells={myBoardCells} label="Your Waters" />
-        </div>
-
-        <div className={styles.boardSection}>
-          <Grid
-            cells={oppBoardCells}
-            onCellClick={handleFire}
-            clickable={isMyTurn}
-            label="Enemy Waters"
-          />
-          <ShipStatusPanel label="Enemy Fleet" shipsStatus={state.opponentShipsStatus} />
-        </div>
+        <Grid
+          cells={oppBoardCells}
+          onCellClick={handleFire}
+          clickable={isMyTurn}
+          label="Enemy Waters"
+        />
+        <Grid cells={myBoardCells} label="Your Waters" />
       </div>
 
-      <GameLog entries={state.shotLog} myId={playerId} />
+      <div className={styles.infoSection}>
+        <ShipStatusPanel label="Your Fleet" shipsStatus={state.myShipsStatus} />
+        <ShipStatusPanel label="Enemy Fleet" shipsStatus={state.opponentShipsStatus} />
+        <GameLog entries={state.shotLog} myId={playerId} />
+      </div>
     </div>
   );
 }

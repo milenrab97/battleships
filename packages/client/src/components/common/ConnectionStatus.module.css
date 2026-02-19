@@ -34,3 +34,13 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
+
+@media (max-width: 480px) {
+  .label {
+    display: none;
+  }
+
+  .indicator {
+    padding: var(--space-xs);
+  }
+}

@@ -10,6 +10,7 @@
   letter-spacing: 0.08em;
   transition: all var(--transition-fast);
   white-space: nowrap;
+  min-height: 44px; /* touch target */
 }
 
 .button:disabled {
@@ -65,4 +66,16 @@
 .lg {
   padding: var(--space-md) var(--space-xl);
   font-size: var(--font-size-lg);
+}
+
+@media (max-width: 480px) {
+  .sm {
+    font-size: var(--font-size-xs);
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  .lg {
+    font-size: var(--font-size-md);
+    padding: var(--space-sm) var(--space-lg);
+  }
 }

@@ -6,7 +6,7 @@
 }
 
 .label {
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--color-text-secondary);
@@ -21,14 +21,14 @@
 
 .corner {
   display: inline-block;
-  width: 28px;
+  width: var(--row-label-width);
   height: 0;
 }
 
 .header {
   display: inline-flex;
   width: var(--cell-size);
-  height: 24px;
+  height: 20px;
   align-items: center;
   justify-content: center;
   font-size: var(--font-size-xs);
@@ -43,7 +43,7 @@
 }
 
 .rowLabel {
-  width: 28px;
+  width: var(--row-label-width);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,4 +51,15 @@
   font-weight: 600;
   color: var(--color-text-secondary);
   height: var(--cell-size);
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 16px;
+    font-size: 0.65rem;
+  }
+
+  .rowLabel {
+    font-size: 0.65rem;
+  }
 }

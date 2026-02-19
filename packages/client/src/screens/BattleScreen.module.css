@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-lg);
+  gap: var(--space-md);
   width: 100%;
-  padding: var(--space-md);
+  padding: var(--space-sm) 0;
 }
 
 .turnBanner {
@@ -14,7 +14,7 @@
 }
 
 .turnText {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -30,19 +30,20 @@
 
 .notification {
   position: fixed;
-  top: 60px;
+  top: 50px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--color-warning);
   color: var(--color-bg-primary);
-  padding: var(--space-sm) var(--space-xl);
+  padding: var(--space-sm) var(--space-lg);
   border-radius: var(--border-radius-md);
   font-weight: 700;
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   z-index: 50;
   animation: slideIn 0.3s ease;
+  white-space: nowrap;
 }
 
 @keyframes slideIn {
@@ -70,7 +71,9 @@
   gap: var(--space-md);
   z-index: 100;
   color: var(--color-text-primary);
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
+  padding: var(--space-md);
+  text-align: center;
 }
 
 .battleArea {
@@ -87,14 +90,54 @@
   align-items: flex-start;
 }
 
+.infoSection {
+  display: flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
 @media (max-width: 900px) {
   .battleArea {
     flex-direction: column;
     align-items: center;
+    gap: var(--space-lg);
   }
 
   .boardSection {
     flex-direction: column;
     align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .boardSection {
+    gap: var(--space-sm);
+  }
+
+  .turnBanner {
+    padding: var(--space-xs) var(--space-md);
+  }
+
+  .turnText {
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    gap: var(--space-sm);
+    padding: 0;
+  }
+
+  .battleArea {
+    gap: var(--space-md);
+  }
+
+  .notification {
+    font-size: var(--font-size-xs);
+    padding: var(--space-xs) var(--space-md);
+    top: 40px;
   }
 }

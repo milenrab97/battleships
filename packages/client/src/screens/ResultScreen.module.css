@@ -4,13 +4,14 @@
   align-items: center;
   gap: var(--space-xl);
   width: 100%;
-  padding: var(--space-lg);
+  padding: var(--space-md);
 }
 
 .result {
   font-size: var(--font-size-3xl);
   text-transform: uppercase;
   letter-spacing: 0.2em;
+  text-align: center;
 }
 
 .victory {
@@ -27,11 +28,14 @@
   color: var(--color-text-secondary);
   font-size: var(--font-size-lg);
   margin-top: calc(-1 * var(--space-md));
+  text-align: center;
 }
 
 .stats {
   display: flex;
-  gap: var(--space-xl);
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .stat {
@@ -40,12 +44,13 @@
   align-items: center;
   gap: var(--space-xs);
   background: var(--color-bg-card);
-  padding: var(--space-md) var(--space-xl);
+  padding: var(--space-md) var(--space-lg);
   border-radius: var(--border-radius-md);
+  min-width: 90px;
 }
 
 .statValue {
-  font-size: var(--font-size-2xl);
+  font-size: var(--font-size-xl);
   font-weight: 700;
   color: var(--color-accent);
   font-family: var(--font-mono);
@@ -60,7 +65,7 @@
 
 .boards {
   display: flex;
-  gap: var(--space-2xl);
+  gap: var(--space-xl);
   flex-wrap: wrap;
   justify-content: center;
 }
@@ -70,9 +75,36 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-md);
+  width: 100%;
+  max-width: 300px;
+}
+
+.actions button {
+  width: 100%;
 }
 
 .hint {
   color: var(--color-accent);
   font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .container {
+    gap: var(--space-lg);
+    padding: var(--space-sm);
+  }
+
+  .stat {
+    padding: var(--space-sm) var(--space-md);
+    min-width: 80px;
+  }
+
+  .statValue {
+    font-size: var(--font-size-lg);
+  }
+
+  .boards {
+    gap: var(--space-md);
+  }
 }

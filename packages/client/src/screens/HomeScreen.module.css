@@ -13,6 +13,7 @@
   text-transform: uppercase;
   color: var(--color-accent);
   text-shadow: 0 0 20px rgba(77, 166, 255, 0.3);
+  text-align: center;
 }
 
 .subtitle {
@@ -51,6 +52,7 @@
   font-size: var(--font-size-md);
   transition: border-color var(--transition-fast);
   outline: none;
+  width: 100%;
 }
 
 .input:focus {
@@ -77,4 +79,10 @@
   color: var(--color-danger);
   font-size: var(--font-size-sm);
   text-align: center;
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: var(--space-lg);
+  }
 }

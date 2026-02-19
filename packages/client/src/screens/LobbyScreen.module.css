@@ -29,7 +29,7 @@
 
 .code {
   font-family: var(--font-mono);
-  font-size: var(--font-size-3xl);
+  font-size: var(--font-size-2xl);
   letter-spacing: 0.3em;
   color: var(--color-accent);
   background: var(--color-bg-card);
@@ -68,7 +68,7 @@
   align-items: center;
   gap: var(--space-sm);
   transition: border-color var(--transition-normal);
-  min-height: 100px;
+  min-height: 90px;
   justify-content: center;
 }
 
@@ -77,8 +77,10 @@
 }
 
 .playerName {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-md);
   font-weight: 600;
+  text-align: center;
+  word-break: break-word;
 }
 
 .readyBadge {
@@ -97,14 +99,16 @@
 }
 
 .vs {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-lg);
   font-weight: 700;
   color: var(--color-text-muted);
+  flex-shrink: 0;
 }
 
 .waiting {
   color: var(--color-text-muted);
   font-style: italic;
+  font-size: var(--font-size-sm);
 }
 
 .actions {
@@ -112,4 +116,28 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-md);
+  width: 100%;
+}
+
+.actions button {
+  width: 100%;
+  max-width: 280px;
+}
+
+@media (max-width: 480px) {
+  .players {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .playerCard {
+    width: 100%;
+    min-height: 70px;
+    padding: var(--space-md);
+  }
+
+  .code {
+    font-size: var(--font-size-xl);
+    padding: var(--space-sm) var(--space-lg);
+  }
 }

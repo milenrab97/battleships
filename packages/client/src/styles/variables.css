@@ -55,6 +55,7 @@
   --cell-size: 40px;
   --grid-gap: 1px;
   --grid-border: 2px;
+  --row-label-width: 28px;
 
   /* Borders */
   --border-radius-sm: 4px;
@@ -70,4 +71,39 @@
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  :root {
+    --cell-size: 32px;
+    --row-label-width: 24px;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 2rem;
+    --space-xl: 1.5rem;
+    --space-2xl: 2rem;
+  }
+}
+
+/* Phone */
+@media (max-width: 480px) {
+  :root {
+    --cell-size: 28px;
+    --row-label-width: 20px;
+    --font-size-lg: 1.1rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.35rem;
+    --font-size-3xl: 1.6rem;
+    --space-lg: 1rem;
+    --space-xl: 1.25rem;
+    --space-2xl: 1.5rem;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  :root {
+    --cell-size: 24px;
+    --row-label-width: 18px;
+  }
 }

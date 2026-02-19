@@ -5,7 +5,7 @@
   padding: var(--space-md);
   background: var(--color-bg-card);
   border-radius: var(--border-radius-md);
-  min-width: 180px;
+  min-width: 170px;
 }
 
 .heading {
@@ -60,8 +60,42 @@
 }
 
 .block {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
   background: var(--color-ship);
   border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .tray {
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: unset;
+    width: 100%;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm);
+  }
+
+  .heading {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .ship {
+    padding: var(--space-xs) var(--space-sm);
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .name {
+    font-size: var(--font-size-xs);
+  }
+
+  .block {
+    width: 12px;
+    height: 12px;
+  }
 }
