@@ -57,6 +57,8 @@ export function BattleScreen() {
     const cell = state.opponentBoard[row]?.[col];
     if (cell && cell.state !== 'empty') return;
 
+    new Audio('/assets/sounds/cannon-fires.mp3').play().catch(() => {});
+
     socket.emit('fireShot', { coordinate: { row, col } }, (res) => {
       if (res.success) {
         dispatch({
