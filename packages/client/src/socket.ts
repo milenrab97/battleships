@@ -3,7 +3,9 @@ import type { ClientToServerEvents, ServerToClientEvents } from '@battleships/sh
 
 export type TypedSocket = Socket<ServerToClientEvents, ClientToServerEvents>;
 
-export const socket: TypedSocket = io({
+const SERVER_URL = import.meta.env.VITE_SERVER_URL || '';
+
+export const socket: TypedSocket = io(SERVER_URL, {
   autoConnect: true,
   reconnection: true,
   reconnectionAttempts: Infinity,
