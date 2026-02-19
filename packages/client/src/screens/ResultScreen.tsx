@@ -71,8 +71,8 @@ export function ResultScreen() {
       </div>
 
       <div className={styles.boards}>
-        <Grid cells={myBoardCells} label="Your Board" />
-        <Grid cells={oppBoardCells} label="Enemy Board" />
+        <Grid cells={myBoardCells} label="Your Board" placements={state.myPlacements} />
+        <Grid cells={oppBoardCells} label="Enemy Board" placements={state.opponentPlacements} />
       </div>
 
       <div className={styles.actions}>

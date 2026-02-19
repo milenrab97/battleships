@@ -25,9 +25,12 @@ export function ShipTray({ selectedShip, placedShips, onSelect }: ShipTrayProps)
           >
             <span className={styles.name}>{ship.name}</span>
             <div className={styles.blocks}>
-              {Array.from({ length: ship.size }, (_, i) => (
-                <span key={i} className={styles.block} />
-              ))}
+              <img
+                src={`/assets/ships/${type}.png`}
+                alt={ship.name}
+                className={styles.shipImage}
+                style={{ width: `${ship.size * 16}px` }}
+              />
             </div>
           </button>
         );

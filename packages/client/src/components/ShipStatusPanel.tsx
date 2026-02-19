@@ -17,10 +17,13 @@ export function ShipStatusPanel({ label, shipsStatus }: ShipStatusPanelProps) {
         return (
           <div key={type} className={`${styles.ship} ${sunk ? styles.sunk : ''}`}>
             <span className={styles.name}>{ship.name}</span>
-            <div className={styles.dots}>
-              {Array.from({ length: ship.size }, (_, i) => (
-                <span key={i} className={styles.dot} />
-              ))}
+            <div className={styles.imageWrap}>
+              <img
+                src={`/assets/ships/${type}.png`}
+                alt={ship.name}
+                className={styles.shipImage}
+                style={{ width: `${ship.size * 10}px` }}
+              />
             </div>
           </div>
         );

@@ -44,7 +44,8 @@ export class GameBoard {
 
     const shipSize = SHIPS[shipType].size;
     if (currentHits >= shipSize) {
-      return { coordinate: coord, result: 'sunk', sunkShip: shipType };
+      const placement = this.originalPlacements.find(p => p.shipType === shipType);
+      return { coordinate: coord, result: 'sunk', sunkShip: shipType, sunkShipPlacement: placement };
     }
 
     return { coordinate: coord, result: 'hit' };

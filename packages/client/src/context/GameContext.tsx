@@ -18,6 +18,7 @@ export type GameState = {
   myBoard: BoardCell[][];
   opponentBoard: BoardCell[][];
   myPlacements: ShipPlacement[];
+  opponentPlacements: ShipPlacement[];
   myShipsStatus: Record<ShipType, { sunk: boolean }>;
   opponentShipsStatus: Record<ShipType, { sunk: boolean }>;
   shotLog: Array<{ playerId: string; result: ShotResult }>;
@@ -58,6 +59,7 @@ const initialState: GameState = {
   myBoard: createEmptyBoard(),
   opponentBoard: createEmptyBoard(),
   myPlacements: [],
+  opponentPlacements: [],
   myShipsStatus: initShipStatus(),
   opponentShipsStatus: initShipStatus(),
   shotLog: [],
@@ -141,9 +143,10 @@ function gameReducer(state: GameState, action: GameAction): GameState {
 
     case 'RECORD_SHOT': {
       const { playerId, result, isMyShot } = action;
-      const { coordinate, result: shotResult, sunkShip } = result;
+      const { coordinate, result: shotResult, sunkShip, sunkShipPlacement } = result;
 
       let opponentBoard = state.opponentBoard;
+      let opponentPlacements = state.opponentPlacements;
       let myBoard = state.myBoard;
       let opponentShipsStatus = state.opponentShipsStatus;
       let myShipsStatus = state.myShipsStatus;
@@ -164,6 +167,20 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         if (shotResult !== 'miss') hits++;
         if (sunkShip) {
           opponentShipsStatus = { ...opponentShipsStatus, [sunkShip]: { sunk: true } };
+          // Reveal the entire sunk ship on the opponent board
+          if (sunkShipPlacement) {
+            opponentPlacements = [...opponentPlacements, sunkShipPlacement];
+            const size = SHIPS[sunkShip].size;
+            const sunkCells = new Set<string>();
+            for (let i = 0; i < size; i++) {
+              const sr = sunkShipPlacement.start.row + (sunkShipPlacement.orientation === 'vertical' ? i : 0);
+              const sc = sunkShipPlacement.start.col + (sunkShipPlacement.orientation === 'horizontal' ? i : 0);
+              sunkCells.add(`${sr},${sc}`);
+            }
+            opponentBoard = opponentBoard.map((row, r) =>
+              row.map((cell, c) => sunkCells.has(`${r},${c}`) ? { ...cell, state: 'sunk', shipType: sunkShip } : cell)
+            );
+          }
         }
       } else {
         // Opponent fired, update my board
@@ -177,6 +194,20 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         );
         if (sunkShip) {
           myShipsStatus = { ...myShipsStatus, [sunkShip]: { sunk: true } };
+          // Mark all cells of the sunk ship as 'sunk'
+          const sunkPlacement = state.myPlacements.find(p => p.shipType === sunkShip);
+          if (sunkPlacement) {
+            const size = SHIPS[sunkShip].size;
+            const sunkCells = new Set<string>();
+            for (let i = 0; i < size; i++) {
+              const sr = sunkPlacement.start.row + (sunkPlacement.orientation === 'vertical' ? i : 0);
+              const sc = sunkPlacement.start.col + (sunkPlacement.orientation === 'horizontal' ? i : 0);
+              sunkCells.add(`${sr},${sc}`);
+            }
+            myBoard = myBoard.map((row, r) =>
+              row.map((cell, c) => sunkCells.has(`${r},${c}`) ? { ...cell, state: 'sunk' } : cell)
+            );
+          }
         }
       }
 
@@ -190,6 +221,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
       return {
         ...state,
         opponentBoard,
+        opponentPlacements,
         myBoard,
         opponentShipsStatus,
         myShipsStatus,
@@ -217,7 +249,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
           }
         }
       }
-      return { ...state, winner: action.winnerId, winnerName: action.winnerName, opponentBoard: revealedBoard, screen: 'result', phase: 'FINISHED' };
+      return { ...state, winner: action.winnerId, winnerName: action.winnerName, opponentBoard: revealedBoard, opponentPlacements: action.opponentShips ?? [], screen: 'result', phase: 'FINISHED' };
     }
 
     case 'SET_DISCONNECT_TIMEOUT':
@@ -235,6 +267,7 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         myBoard: createEmptyBoard(),
         opponentBoard: createEmptyBoard(),
         myPlacements: [],
+        opponentPlacements: [],
         myShipsStatus: initShipStatus(),
         opponentShipsStatus: initShipStatus(),
         shotLog: [],

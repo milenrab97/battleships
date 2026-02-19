@@ -108,6 +108,7 @@ export function PlacementScreen() {
           onCellEnter={(r, c) => setHoverCell({ row: r, col: c })}
           onCellLeave={() => setHoverCell(null)}
           clickable={!!selectedShip}
+          placements={placements}
         />
 
         <div className={styles.controls}>

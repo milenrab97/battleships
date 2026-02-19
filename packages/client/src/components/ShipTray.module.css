@@ -44,10 +44,6 @@
   cursor: not-allowed;
 }
 
-.placed .block {
-  background: var(--color-ship-placed);
-}
-
 .name {
   font-size: var(--font-size-sm);
   font-weight: 600;
@@ -59,11 +55,10 @@
   gap: 2px;
 }
 
-.block {
-  width: 16px;
+.shipImage {
   height: 16px;
-  background: var(--color-ship);
-  border-radius: 2px;
+  object-fit: contain;
+  image-rendering: auto;
 }
 
 @media (max-width: 768px) {
@@ -94,8 +89,7 @@
     font-size: var(--font-size-xs);
   }
 
-  .block {
-    width: 12px;
+  .shipImage {
     height: 12px;
   }
 }

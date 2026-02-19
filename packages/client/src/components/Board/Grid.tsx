@@ -1,7 +1,15 @@
-import type { CellState, Coordinate } from '@battleships/shared';
-import { GRID_SIZE, COLUMN_LABELS } from '@battleships/shared';
+import { useMemo } from 'react';
+import type { CellState, Coordinate, ShipPlacement, ShipType, Orientation } from '@battleships/shared';
+import { GRID_SIZE, COLUMN_LABELS, SHIPS } from '@battleships/shared';
 import { Cell } from './Cell';
 import styles from './Grid.module.css';
+
+export type ShipInfo = {
+  type: ShipType;
+  size: number;
+  segmentIndex: number;
+  orientation: Orientation;
+};
 
 type CellData = {
   state: CellState;
@@ -16,9 +24,28 @@ type GridProps = {
   clickable?: boolean;
   label?: string;
   lastShot?: Coordinate | null;
+  placements?: ShipPlacement[];
 };
 
-export function Grid({ cells, onCellClick, onCellEnter, onCellLeave, clickable, label, lastShot }: GridProps) {
+export function Grid({ cells, onCellClick, onCellEnter, onCellLeave, clickable, label, lastShot, placements }: GridProps) {
+  const shipInfoMap = useMemo(() => {
+    if (!placements || placements.length === 0) return null;
+    const map: (ShipInfo | null)[][] = Array.from({ length: GRID_SIZE }, () =>
+      Array.from({ length: GRID_SIZE }, () => null)
+    );
+    for (const p of placements) {
+      const size = SHIPS[p.shipType].size;
+      for (let i = 0; i < size; i++) {
+        const r = p.start.row + (p.orientation === 'vertical' ? i : 0);
+        const c = p.start.col + (p.orientation === 'horizontal' ? i : 0);
+        if (r >= 0 && r < GRID_SIZE && c >= 0 && c < GRID_SIZE) {
+          map[r][c] = { type: p.shipType, size, segmentIndex: i, orientation: p.orientation };
+        }
+      }
+    }
+    return map;
+  }, [placements]);
+
   return (
     <div className={styles.wrapper}>
       {label && <h3 className={styles.label}>{label}</h3>}
@@ -43,6 +70,7 @@ export function Grid({ cells, onCellClick, onCellEnter, onCellLeave, clickable, 
                   preview={cellData.preview}
                   clickable={clickable}
                   isLastShot={isLastShot}
+                  shipInfo={shipInfoMap?.[row]?.[col] ?? undefined}
                   onClick={() => onCellClick?.(row, col)}
                   onMouseEnter={() => onCellEnter?.(row, col)}
                   onMouseLeave={onCellLeave}

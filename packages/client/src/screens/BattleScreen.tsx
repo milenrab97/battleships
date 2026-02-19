@@ -107,11 +107,13 @@ export function BattleScreen() {
           clickable={isMyTurn}
           label="Enemy Waters"
           lastShot={state.lastShotOnOpponentBoard}
+          placements={state.opponentPlacements}
         />
         <Grid
           cells={myBoardCells}
           label="Your Waters"
           lastShot={state.lastShotOnMyBoard}
+          placements={state.myPlacements}
         />
       </div>
 

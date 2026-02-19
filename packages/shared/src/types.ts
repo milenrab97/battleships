@@ -24,6 +24,7 @@ export type ShotResult = {
   coordinate: Coordinate;
   result: 'hit' | 'miss' | 'sunk';
   sunkShip?: ShipType;
+  sunkShipPlacement?: ShipPlacement;
 };
 
 export type GameState = {

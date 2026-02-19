@@ -35,20 +35,19 @@
   color: var(--color-text-primary);
 }
 
-.dots {
+.imageWrap {
   display: flex;
-  gap: 3px;
+  align-items: center;
 }
 
-.dot {
-  width: 10px;
+.shipImage {
   height: 10px;
-  border-radius: 2px;
-  background: var(--color-ship);
+  object-fit: contain;
+  image-rendering: auto;
 }
 
-.sunk .dot {
-  background: var(--color-sunk);
+.sunk .shipImage {
+  filter: grayscale(1) brightness(0.4);
 }
 
 @media (max-width: 480px) {
@@ -61,8 +60,7 @@
     font-size: var(--font-size-xs);
   }
 
-  .dot {
-    width: 8px;
+  .shipImage {
     height: 8px;
   }
 }
