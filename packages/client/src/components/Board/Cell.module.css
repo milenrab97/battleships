@@ -9,17 +9,21 @@
   transition: background var(--transition-fast);
   position: relative;
   user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .clickable {
   cursor: crosshair;
 }
 
-.clickable:hover {
-  background: var(--color-ocean-light);
+/* Only show hover highlight on devices with a real pointer */
+@media (hover: hover) and (pointer: fine) {
+  .clickable.empty:hover {
+    background: var(--color-ocean-light);
+  }
 }
 
-/* Cell states */
+/* Cell states — these always take priority */
 .empty {
   background: var(--color-ocean);
 }
