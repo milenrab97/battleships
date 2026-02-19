@@ -37,7 +37,7 @@
 }
 
 .miss {
-  background: var(--color-ocean-dark);
+  background: var(--color-ocean);
 }
 
 .sunk {
@@ -70,5 +70,31 @@
 }
 
 .miss .marker {
-  color: var(--color-text-muted);
+  color: rgba(200, 220, 240, 0.7);
+  font-size: calc(var(--cell-size) * 0.65);
+}
+
+/* Last shot pulse highlight */
+.lastShot {
+  animation: pulse 1.5s ease-in-out infinite;
+  z-index: 2;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+.lastShot.hit,
+.lastShot.sunk {
+  box-shadow: 0 0 8px 2px rgba(255, 68, 68, 0.9);
+}
+
+.lastShot.miss {
+  box-shadow: 0 0 8px 2px rgba(200, 220, 240, 0.7);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }

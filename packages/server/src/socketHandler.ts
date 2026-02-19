@@ -138,7 +138,15 @@ export function setupSocketHandlers(io: TypedServer) {
 
       if (gameOver) {
         const winnerName = socket.data.playerName ?? 'Unknown';
-        io.to(roomCode).emit('gameOver', { winnerId: playerId, winnerName });
+        // Send each player their opponent's ship placements
+        for (const [pid] of room.players) {
+          const opponentId = room.getOpponentId(pid);
+          const opponentShips = opponentId ? room.getPlayerPlacements(opponentId) : [];
+          const sid = room.getSocketId(pid);
+          if (sid) {
+            io.to(sid).emit('gameOver', { winnerId: playerId, winnerName, opponentShips });
+          }
+        }
       }
     });
 
@@ -178,10 +186,16 @@ export function setupSocketHandlers(io: TypedServer) {
           const remaining = room.players.get(remainingId);
           room.phase = 'FINISHED';
           room.winner = remainingId;
-          io.to(roomCode).emit('gameOver', {
-            winnerId: remainingId,
-            winnerName: remaining?.name ?? 'Unknown',
-          });
+          // Send opponent ships to remaining player
+          const leaverShips = room.getPlayerPlacements(playerId);
+          const remainingSid = room.getSocketId(remainingId);
+          if (remainingSid) {
+            io.to(remainingSid).emit('gameOver', {
+              winnerId: remainingId,
+              winnerName: remaining?.name ?? 'Unknown',
+              opponentShips: leaverShips,
+            });
+          }
         }
       }
 
@@ -226,10 +240,15 @@ export function setupSocketHandlers(io: TypedServer) {
           const opponent = room.players.get(opponentId);
           room.phase = 'FINISHED';
           room.winner = opponentId;
-          io.to(roomCode).emit('gameOver', {
-            winnerId: opponentId,
-            winnerName: opponent?.name ?? 'Unknown',
-          });
+          const disconnectedShips = room.getPlayerPlacements(playerId);
+          const oppSid = room.getSocketId(opponentId);
+          if (oppSid) {
+            io.to(oppSid).emit('gameOver', {
+              winnerId: opponentId,
+              winnerName: opponent?.name ?? 'Unknown',
+              opponentShips: disconnectedShips,
+            });
+          }
         }
         room.removePlayer(playerId);
         if (room.getPlayerCount() === 0) {

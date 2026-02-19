@@ -10,6 +10,7 @@ export class GameBoard {
   private grid: InternalCell[][];
   private shipCells = new Map<ShipType, Coordinate[]>();
   private shipHits = new Map<ShipType, number>();
+  private originalPlacements: ShipPlacement[] = [];
 
   constructor() {
     this.grid = Array.from({ length: GRID_SIZE }, () =>
@@ -18,6 +19,7 @@ export class GameBoard {
   }
 
   placeShips(placements: ShipPlacement[]): void {
+    this.originalPlacements = placements;
     for (const p of placements) {
       const cells = GameBoard.getShipCells(p);
       this.shipCells.set(p.shipType, cells);
@@ -84,6 +86,10 @@ export class GameBoard {
         return hits >= size ? 'sunk' : 'hit';
       })
     );
+  }
+
+  getPlacements(): ShipPlacement[] {
+    return this.originalPlacements;
   }
 
   getShipCellsMap(): Map<ShipType, Coordinate[]> {

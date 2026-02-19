@@ -31,7 +31,7 @@ export function BattleScreen() {
   }, [playerId, dispatch]));
 
   useSocketEvent('gameOver', useCallback((data) => {
-    dispatch({ type: 'SET_GAME_OVER', winnerId: data.winnerId, winnerName: data.winnerName });
+    dispatch({ type: 'SET_GAME_OVER', winnerId: data.winnerId, winnerName: data.winnerName, opponentShips: data.opponentShips });
   }, [dispatch]));
 
   useSocketEvent('opponentDisconnected', useCallback((data) => {
@@ -106,8 +106,13 @@ export function BattleScreen() {
           onCellClick={handleFire}
           clickable={isMyTurn}
           label="Enemy Waters"
+          lastShot={state.lastShotOnOpponentBoard}
         />
-        <Grid cells={myBoardCells} label="Your Waters" />
+        <Grid
+          cells={myBoardCells}
+          label="Your Waters"
+          lastShot={state.lastShotOnMyBoard}
+        />
       </div>
 
       <div className={styles.infoSection}>

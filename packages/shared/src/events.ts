@@ -18,7 +18,7 @@ export interface ServerToClientEvents {
   phaseChanged: (data: { phase: GamePhase; currentTurn?: string }) => void;
   opponentPlacedShips: () => void;
   shotFired: (data: { playerId: string; result: ShotResult }) => void;
-  gameOver: (data: { winnerId: string; winnerName: string }) => void;
+  gameOver: (data: { winnerId: string; winnerName: string; opponentShips: ShipPlacement[] }) => void;
   opponentDisconnected: (data: { timeout: number }) => void;
   opponentReconnected: () => void;
   roomClosed: (data: { reason: string }) => void;

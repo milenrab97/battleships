@@ -1,4 +1,4 @@
-import type { CellState } from '@battleships/shared';
+import type { CellState, Coordinate } from '@battleships/shared';
 import { GRID_SIZE, COLUMN_LABELS } from '@battleships/shared';
 import { Cell } from './Cell';
 import styles from './Grid.module.css';
@@ -15,9 +15,10 @@ type GridProps = {
   onCellLeave?: () => void;
   clickable?: boolean;
   label?: string;
+  lastShot?: Coordinate | null;
 };
 
-export function Grid({ cells, onCellClick, onCellEnter, onCellLeave, clickable, label }: GridProps) {
+export function Grid({ cells, onCellClick, onCellEnter, onCellLeave, clickable, label, lastShot }: GridProps) {
   return (
     <div className={styles.wrapper}>
       {label && <h3 className={styles.label}>{label}</h3>}
@@ -34,12 +35,14 @@ export function Grid({ cells, onCellClick, onCellEnter, onCellLeave, clickable, 
             <div className={styles.rowLabel}>{row + 1}</div>
             {Array.from({ length: GRID_SIZE }, (_, col) => {
               const cellData = cells[row]?.[col] ?? { state: 'empty' as CellState };
+              const isLastShot = lastShot?.row === row && lastShot?.col === col;
               return (
                 <Cell
                   key={col}
                   state={cellData.state}
                   preview={cellData.preview}
                   clickable={clickable}
+                  isLastShot={isLastShot}
                   onClick={() => onCellClick?.(row, col)}
                   onMouseEnter={() => onCellEnter?.(row, col)}
                   onMouseLeave={onCellLeave}

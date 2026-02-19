@@ -1,6 +1,6 @@
 import { createContext, useContext, useReducer, type ReactNode, type Dispatch } from 'react';
 import type { GamePhase, PlayerInfo, ShotResult, ShipPlacement, Coordinate, CellState, ShipType } from '@battleships/shared';
-import { GRID_SIZE } from '@battleships/shared';
+import { GRID_SIZE, SHIPS } from '@battleships/shared';
 
 export type Screen = 'home' | 'lobby' | 'placement' | 'battle' | 'result';
 
@@ -29,6 +29,8 @@ export type GameState = {
   waitingForOpponent: boolean;
   disconnectTimeout: number | null;
   playAgainRequested: Record<string, boolean>;
+  lastShotOnMyBoard: Coordinate | null;
+  lastShotOnOpponentBoard: Coordinate | null;
 };
 
 function createEmptyBoard(): BoardCell[][] {
@@ -67,6 +69,8 @@ const initialState: GameState = {
   waitingForOpponent: false,
   disconnectTimeout: null,
   playAgainRequested: {},
+  lastShotOnMyBoard: null,
+  lastShotOnOpponentBoard: null,
 };
 
 export type GameAction =
@@ -81,7 +85,7 @@ export type GameAction =
   | { type: 'SET_MY_BOARD'; board: BoardCell[][] }
   | { type: 'SET_WAITING_FOR_OPPONENT'; waiting: boolean }
   | { type: 'RECORD_SHOT'; playerId: string; result: ShotResult; isMyShot: boolean }
-  | { type: 'SET_GAME_OVER'; winnerId: string; winnerName: string }
+  | { type: 'SET_GAME_OVER'; winnerId: string; winnerName: string; opponentShips: ShipPlacement[] }
   | { type: 'SET_DISCONNECT_TIMEOUT'; timeout: number | null }
   | { type: 'PLAY_AGAIN_REQUESTED'; playerId: string }
   | { type: 'RESET_FOR_NEW_GAME' }
@@ -193,11 +197,28 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         hits,
         currentTurn,
         shotLog: [...state.shotLog, { playerId, result }],
+        lastShotOnMyBoard: isMyShot ? state.lastShotOnMyBoard : coordinate,
+        lastShotOnOpponentBoard: isMyShot ? coordinate : state.lastShotOnOpponentBoard,
       };
     }
 
-    case 'SET_GAME_OVER':
-      return { ...state, winner: action.winnerId, winnerName: action.winnerName, screen: 'result', phase: 'FINISHED' };
+    case 'SET_GAME_OVER': {
+      // Reveal opponent's ships on the opponent board
+      const revealedBoard = state.opponentBoard.map(row => row.map(cell => ({ ...cell })));
+      if (action.opponentShips) {
+        for (const p of action.opponentShips) {
+          const size = SHIPS[p.shipType].size;
+          for (let i = 0; i < size; i++) {
+            const r = p.start.row + (p.orientation === 'vertical' ? i : 0);
+            const c = p.start.col + (p.orientation === 'horizontal' ? i : 0);
+            if (revealedBoard[r]?.[c] && revealedBoard[r][c].state === 'empty') {
+              revealedBoard[r][c] = { state: 'ship', shipType: p.shipType };
+            }
+          }
+        }
+      }
+      return { ...state, winner: action.winnerId, winnerName: action.winnerName, opponentBoard: revealedBoard, screen: 'result', phase: 'FINISHED' };
+    }
 
     case 'SET_DISCONNECT_TIMEOUT':
       return { ...state, disconnectTimeout: action.timeout };
@@ -223,6 +244,8 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         hits: 0,
         waitingForOpponent: false,
         playAgainRequested: {},
+        lastShotOnMyBoard: null,
+        lastShotOnOpponentBoard: null,
         players: state.players.map(p => ({ ...p, ready: false })),
       };
 

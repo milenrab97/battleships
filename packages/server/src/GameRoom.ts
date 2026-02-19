@@ -165,6 +165,10 @@ export class GameRoom {
     return { result, gameOver };
   }
 
+  getPlayerPlacements(playerId: string): ShipPlacement[] {
+    return this.players.get(playerId)?.board?.getPlacements() ?? [];
+  }
+
   handleDisconnect(playerId: string, onTimeout: () => void): void {
     const player = this.players.get(playerId);
     if (!player) return;
