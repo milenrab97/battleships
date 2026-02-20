@@ -20,6 +20,9 @@ export function BattleScreen() {
 
   useSocketEvent('shotFired', useCallback((data) => {
     const isMyShot = data.playerId === playerId;
+    if (!isMyShot) {
+      new Audio('/assets/sounds/cannon-fires.mp3').play().catch(() => {});
+    }
     dispatch({ type: 'RECORD_SHOT', playerId: data.playerId, result: data.result, isMyShot });
 
     if (data.result.sunkShip) {
